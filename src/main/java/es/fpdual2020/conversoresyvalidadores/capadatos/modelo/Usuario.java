@@ -1,6 +1,7 @@
 package es.fpdual2020.conversoresyvalidadores.capadatos.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,8 @@ public class Usuario implements Serializable {
 	private Integer edad;
 
 	private String firma;
+
+	private Date fechaNacimiento;
 
 	public Long getId() {
 		return id;
@@ -85,6 +88,14 @@ public class Usuario implements Serializable {
 
 	public void setFirma(String firma) {
 		this.firma = firma;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 }

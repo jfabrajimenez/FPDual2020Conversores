@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.fpdual2020.conversoresyvalidadores.capadatos.modelo.Usuario;
@@ -12,6 +13,7 @@ import es.fpdual2020.conversoresyvalidadores.capadatos.repositorio.interfaz.Repo
 import es.fpdual2020.conversoresyvalidadores.servicio.excepciones.ValidacionUsuarioException;
 import es.fpdual2020.conversoresyvalidadores.servicio.interfaz.ServicioUsuario;
 
+@Service
 public class ServicioUsuariosImpl implements ServicioUsuario {
 
 	@Autowired

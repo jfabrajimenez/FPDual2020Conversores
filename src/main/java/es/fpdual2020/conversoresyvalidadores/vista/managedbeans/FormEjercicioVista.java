@@ -1,18 +1,27 @@
 package es.fpdual2020.conversoresyvalidadores.vista.managedbeans;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import es.fpdual2020.conversoresyvalidadores.capadatos.modelo.Usuario;
+import es.fpdual2020.conversoresyvalidadores.servicio.excepciones.ValidacionUsuarioException;
+import es.fpdual2020.conversoresyvalidadores.servicio.interfaz.ServicioUsuario;
 
 @ViewScoped
 @Component
 public class FormEjercicioVista {
+
+	@Autowired
+	private ServicioUsuario servicioUsuario;
+
+	private String nif;
 
 	private String nombre;
 
@@ -22,47 +31,41 @@ public class FormEjercicioVista {
 
 	private Integer edad;
 
+	private Date fechaNacimiento;
+
 	private String firma;
-
-	public void validarForm() {
-		List<String> camposObligatoriosNoEnviados = new ArrayList<>();
-
-		if (this.isBlank(this.nombre)) {
-			camposObligatoriosNoEnviados.add("Nombre");
-		}
-
-		if (this.isBlank(this.apellido1)) {
-			camposObligatoriosNoEnviados.add("Primer Apellido");
-		}
-
-		if (this.isBlank(this.apellido2)) {
-			camposObligatoriosNoEnviados.add("Segundo Apellido");
-		}
-
-		if (this.edad == null || this.edad <= 0) {
-			camposObligatoriosNoEnviados.add("Edad");
-		}
-
-		if (this.isBlank(this.firma)) {
-			camposObligatoriosNoEnviados.add("Firma");
-		}
-
-		if (camposObligatoriosNoEnviados.isEmpty()) {
-			this.mostrarInfo("Datos correctos");
-		} else {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Faltan los siguientes datos obligatorios: ");
-			camposObligatoriosNoEnviados.forEach(co -> sb.append(co + ", "));
-			this.mostrarError(sb.toString());
-		}
-	}
 
 	public void resetearFirma() {
 		this.firma = "";
 	}
 
+	public void guardar() {
+		Usuario usuario = new Usuario();
+		usuario.setNif(this.nif);
+		usuario.setNombre(this.nombre);
+		usuario.setApellido1(this.apellido1);
+		usuario.setApellido2(this.apellido2);
+		usuario.setEdad(this.edad);
+		usuario.setFirma(this.firma);
+		usuario.setFechaNacimiento(this.fechaNacimiento);
+
+		try {
+			this.servicioUsuario.guardar(usuario);
+		} catch (ValidacionUsuarioException e) {
+			this.mostrarError("El usuario no se ha podido guardar");
+		}
+	}
+
 	public void noValidar() {
 		this.mostrarWarn("No se ha validado el formulario");
+	}
+
+	public String getNif() {
+		return nif;
+	}
+
+	public void setNif(String nif) {
+		this.nif = nif;
 	}
 
 	public String getNombre() {
@@ -99,6 +102,14 @@ public class FormEjercicioVista {
 
 	public String getFirma() {
 		return firma;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public void setFirma(String firma) {
