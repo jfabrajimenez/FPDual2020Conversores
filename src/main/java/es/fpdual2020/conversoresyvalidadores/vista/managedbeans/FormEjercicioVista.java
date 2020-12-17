@@ -5,50 +5,48 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.stereotype.Component;
-
 
 @ViewScoped
 @Component
 public class FormEjercicioVista {
 
 	private String nombre;
-	
+
 	private String apellido1;
-	
+
 	private String apellido2;
-	
-	private String edad;
-	
+
+	private Integer edad;
+
 	private String firma;
 
 	public void validarForm() {
 		List<String> camposObligatoriosNoEnviados = new ArrayList<>();
-		
+
 		if (this.isBlank(this.nombre)) {
 			camposObligatoriosNoEnviados.add("Nombre");
-		} 
-		
+		}
+
 		if (this.isBlank(this.apellido1)) {
 			camposObligatoriosNoEnviados.add("Primer Apellido");
 		}
-		
+
 		if (this.isBlank(this.apellido2)) {
 			camposObligatoriosNoEnviados.add("Segundo Apellido");
-		} 
-		
-		if (this.isBlank(this.edad) || this.edad.equals("0")) {
+		}
+
+		if (this.edad == null || this.edad <= 0) {
 			camposObligatoriosNoEnviados.add("Edad");
 		}
-		
+
 		if (this.isBlank(this.firma)) {
 			camposObligatoriosNoEnviados.add("Firma");
 		}
-		
+
 		if (camposObligatoriosNoEnviados.isEmpty()) {
 			this.mostrarInfo("Datos correctos");
 		} else {
@@ -58,15 +56,15 @@ public class FormEjercicioVista {
 			this.mostrarError(sb.toString());
 		}
 	}
-	
+
 	public void resetearFirma() {
 		this.firma = "";
 	}
-	
+
 	public void noValidar() {
 		this.mostrarWarn("No se ha validado el formulario");
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -91,38 +89,36 @@ public class FormEjercicioVista {
 		this.apellido2 = apellido2;
 	}
 
-	public String getEdad() {
+	public Integer getEdad() {
 		return edad;
 	}
 
-	public void setEdad(String edad) {
+	public void setEdad(Integer edad) {
 		this.edad = edad;
 	}
-	
+
 	public String getFirma() {
 		return firma;
 	}
-	
+
 	public void setFirma(String firma) {
 		this.firma = firma;
 	}
-	
+
 	protected boolean isBlank(String texto) {
 		return Objects.isNull(texto) || texto == "";
 	}
-	
+
 	protected void mostrarError(String error) {
-		FacesContext.getCurrentInstance()
-			.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", error));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", error));
 	}
-	
+
 	protected void mostrarWarn(String warn) {
-		FacesContext.getCurrentInstance()
-		.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", warn));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", warn));
 	}
-	
+
 	protected void mostrarInfo(String info) {
-		FacesContext.getCurrentInstance()
-			.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", info));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", info));
 	}
 }
