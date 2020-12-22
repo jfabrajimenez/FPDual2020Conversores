@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+  <h:head>
+  	<title>Direcciones de usuarios</title>
+  </h:head>
+ 
+  <h:body>
+  	<h:form id="formularioDirecciones">
+  		<p:messages id="messages" showDetail="true" closable="true">
+	        <p:autoUpdate />
+	    </p:messages>
+	    
+	    <h:outputText value="Calle"/>
+	    <p:inputText id="calle" value="#{formularioDireccionVista.calle}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <h:outputText value="Número"/>
+	    <p:inputText id="numero" value="#{formularioDireccionVista.numero}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <h:outputText value="Bloque"/>
+	    <p:inputText id="bloque" value="#{formularioDireccionVista.bloque}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <h:outputText value="Puerta"/>
+	    <p:inputText id="puerta" value="#{formularioDireccionVista.puerta}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <h:outputText value="Habitante1"/>
+	    <p:inputText id="habitante1" value="#{formularioDireccionVista.habitante1}" converter="#{conversorUsuario}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <h:outputText value="Habitante2"/>
+	    <p:inputText id="habitante2" value="#{formularioDireccionVista.habitante2}" converter="#{conversorUsuario}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <h:outputText value="Habitante3"/>
+	    <p:inputText id="habitante3" value="#{formularioDireccionVista.habitante3}" converter="#{conversorUsuario}" />
+	    <p:spacer height="10px" width="100%"/>
+	    
+	    <p:commandButton id="submitButton" action="#{formularioDireccionVista.guardar}" value="Guardar" />
+  	</h:form>
+  </h:body>
+</html>

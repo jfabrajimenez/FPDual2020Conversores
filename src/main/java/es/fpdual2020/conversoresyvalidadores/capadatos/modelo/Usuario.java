@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Usuario implements Serializable {
@@ -33,6 +34,9 @@ public class Usuario implements Serializable {
 	private String firma;
 
 	private Date fechaNacimiento;
+
+	@ManyToOne
+	private Direccion direccion;
 
 	public Long getId() {
 		return id;
@@ -96,6 +100,14 @@ public class Usuario implements Serializable {
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 }

@@ -7,11 +7,15 @@ import javax.servlet.ServletContext;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.ServletContextAware;
+
+import com.sun.faces.config.ConfigureListener;
 
 @SpringBootApplication
-public class ConversoresyvalidadoresApplication {
+public class ConversoresyvalidadoresApplication implements ServletContextAware {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConversoresyvalidadoresApplication.class, args);
@@ -28,5 +32,15 @@ public class ConversoresyvalidadoresApplication {
 		srb.setUrlMappings(Arrays.asList("*.xhtml"));
 		srb.setLoadOnStartup(1);
 		return srb;
+	}
+
+	@Bean
+	public ServletListenerRegistrationBean<ConfigureListener> jsfConfigureListener() {
+		return new ServletListenerRegistrationBean<ConfigureListener>(new ConfigureListener());
+	}
+
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
 	}
 }
